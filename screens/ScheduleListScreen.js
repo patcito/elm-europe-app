@@ -123,7 +123,7 @@ class ScheduleListScreen extends React.Component {
 
 export default graphql(gql`
   {
-    events(slug: "reacteurope-2017") {
+    events(slug: "elm-europe-2017") {
       schedule(tags: "*") {
         id
         title
@@ -178,16 +178,8 @@ render() {
         }}>
         <Image
           source={require('../assets/logo.png')}
-          style={{ width: 85, height: 85, resizeMode: 'contain' }}
+          style={{ width: 100, height: 100, resizeMode: 'contain' }}
         />
-        <Text
-          style={{
-            fontSize: 25,
-            color: '#fff',
-            backgroundColor: 'transparent',
-          }}>
-          React Europe
-        </Text>
       </View>
 
       <View

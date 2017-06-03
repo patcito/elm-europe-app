@@ -11,7 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { ApolloClient, ApolloProvider } from 'react-apollo';
 import { createNetworkInterface } from 'apollo-client';
 
-const networkInterface = createNetworkInterface('https://www.react-europe.org/gql');
+const networkInterface = createNetworkInterface('https://api.eventlama.com/gql');
 const client = new ApolloClient({
   networkInterface,
   dataIdFromObject: r => r.id,
@@ -67,7 +67,7 @@ const RootNavigator = TabNavigator(
     Schedule: {
       screen: ScheduleStack,
     },
-    Feedback: {
+    About: {
       screen: FeedbackStack,
     },
   },

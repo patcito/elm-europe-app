@@ -1,5 +1,7 @@
 import React from 'react';
-import Expo from 'expo';
+import {Expo, MapView, WebBrowser} from 'expo';
+import flagBlueImg from '../assets/flag-blue.png';
+
 import {
   TextInput,
   ScrollView,
@@ -14,13 +16,18 @@ import {
 } from 'react-native';
 
 import GrowingTextInput from '../components/GrowingTextInput';
+const LATITUDE = 48.7887337;
+const LONGITUDE = 2.3637327;
+const LATITUDE_DELTA = 0.0922;
+const LONGITUDE_DELTA = 0.0421;
+const SPACE = 0.01;
 
 export default class FeedbackScreen extends React.Component {
   static navigationOptions = {
     headerStyle: {
       backgroundColor: '#050B7A',
     },
-    headerTitle: 'Feedback',
+    headerTitle: 'Getting there',
     headerTintColor: '#fff',
   };
 
@@ -39,124 +46,70 @@ export default class FeedbackScreen extends React.Component {
 
           <SectionLabel title="Contact Information" />
           <View style={[styles.row, styles.firstRow]}>
-            <TextInput
-              ref={view => {
-                this._fullNameInput = view;
-              }}
-              style={[styles.textInputRow]}
-              autoCorrect={false}
-              placeholder="Full name"
-              onSubmitEditing={() => this._emailInput.focus()}
-              underlineColorAndroid="transparent"
-              blurOnSubmit={false}
-            />
+        <MapView
+          style={{ alignSelf: 'stretch', height: 200 }}
+          region={this.state.mapRegion}
+          onRegionChange={this._handleMapRegionChange}
+		  initialRegion={{
+		  latitude: LATITUDE,
+          longitude: LONGITUDE,
+		  latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+		  }}
+        >
+          <MapView.Marker
+			onPress={this._handlePressButtonAsync}
+            coordinate={{
+              latitude: LATITUDE + SPACE,
+              longitude: LONGITUDE + SPACE,
+            }}
+            centerOffset={{ x: -18, y: -60 }}
+            anchor={{ x: 0.69, y: 1 }}
+            image={require('../assets/flag-blue.png')}
+          >
+            <Text style={styles.marker}>X</Text>
+          </MapView.Marker>
+</MapView>
           </View>
 
-          <View style={styles.row}>
-            <TextInput
-              ref={view => {
-                this._emailInput = view;
-              }}
-              style={[styles.textInputRow]}
-              autoCorrect={false}
-              placeholder="Email"
-              keyboardType="email-address"
-              onSubmitEditing={() => this._phoneInput.focus()}
-              underlineColorAndroid="transparent"
-              blurOnSubmit={false}
-            />
-          </View>
-
-          <View style={styles.row}>
-            <TextInput
-              ref={view => {
-                this._phoneInput = view;
-              }}
-              style={[styles.textInputRow]}
-              placeholder="Phone Number"
-              keyboardType="phone-pad"
-              onSubmitEditing={() => this._feedbackInput.focus()}
-              underlineColorAndroid="transparent"
-              blurOnSubmit={false}
-            />
-          </View>
-
-          <SectionLabel title="Feedback" />
+          <SectionLabel title="Location" />
           <View style={[styles.row, styles.firstRow]}>
 
             {/* https://snack.expo.io/ByW4CFPx- */}
-            <GrowingTextInput
-              minHeight={80}
+            <Text
               ref={view => {
                 this._feedbackInput = view;
               }}
-              placeholder="Please write at least two or three sentences to share your feedback with us."
-              value={this.state.feedbackText}
-              onChangeText={feedbackText => this.setState({ feedbackText })}
-              style={[styles.textInputRow, styles.multiLineTextInputRow]}
-            />
-          </View>
-          <View style={styles.row}>
-            <View
-              style={{
-                paddingHorizontal: 20,
-                paddingTop: 15,
-                paddingBottom: 5,
-              }}>
-              <View style={styles.rowTitle}>
-                <Text style={styles.rowTitleText}>How do you feel?</Text>
-              </View>
+              style={[styles.textInputRow, styles.multiLineTextInputRow, {height: 60}]}
+            >Efrei, 30-32 Avenue de la République, 94800, Villejuif, France</Text>
 
-              <View style={styles.sliderContainer}>
-                <Text>Sad</Text>
-                <Slider
-                  style={{ flex: 1, marginHorizontal: 10 }}
-                  hitSlop={{ top: 10, left: 10, right: 10, bottom: 10 }}
-                  maximumValue={10}
-                  minimumTrackTintColor={
-                    Platform.OS === 'ios' ? '#3B40B4' : '#ccc'
-                  }
-                  maximumTrackTintColor={
-                    Platform.OS === 'android' ? '#3B40B4' : null
-                  }
-                  thumbTintColor="#02075B"
-                />
-                <Text>Happy</Text>
-              </View>
-            </View>
           </View>
 
-          <View style={styles.row}>
-            <View
-              style={{
-                flexDirection: 'row',
-                paddingVertical: 10,
-                paddingHorizontal: 20,
-              }}>
-              <View style={{ flex: 1, justifyContent: 'center' }}>
-                <Text style={styles.rowTitleText}>This feedback is urgent</Text>
-              </View>
-              <View>
-                <Switch
-                  onTintColor={
-                    Platform.OS === 'android' ? '#6A6DAE' : '#3B40B4'
-                  }
-                  value={this.state.isUrgent}
-                  onValueChange={isUrgent => this.setState({ isUrgent })}
-                  thumbTintColor={Platform.OS === 'android' ? '#02075B' : null}
-                />
-              </View>
-            </View>
-          </View>
+          <SectionLabel title="Credits" />
+          <View style={[styles.row, styles.firstRow]}>
 
-          {this._renderSubmitButton()}
+            {/* https://snack.expo.io/ByW4CFPx- */}
+      <TouchableOpacity
+			onPress={() => this._handlePressExpoAsync()}
+>
+            <Text
+              minHeight={80}
+              style={[styles.textInputRow, styles.multiLineTextInputRow, {height: 60}]}
+            >Built with expo.io, thanks to the expo.io team for letting us re-use this code.</Text>
+      </TouchableOpacity>
+
+          </View>
         </ScrollView>
         <StatusBar barStyle="light-content" />
       </View>
     );
   }
-
-  _renderSubmitButton = () => {
+  _handlePressButtonAsync = async () => {
+    await WebBrowser.openBrowserAsync('https://www.google.com/maps/place/Efrei/@48.78873369999999,2.363732700000014,17z');
+  };
+  _handlePressExpoAsync = async () => {
+    await WebBrowser.openBrowserAsync('https://expo.io');
+  };  _renderSubmitButton = () => {
     return (
       <TouchableOpacity
         onPress={() => alert('pressed!')}
