@@ -1,5 +1,5 @@
 {
-  "name": "ReactEurope",
+  "name": "ElmEurope",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -20,7 +20,9 @@
   },
   "dependencies": {
     "apollo-client": "^1.2.2",
+    "exp": "^41.0.0",
     "expo": "^16.0.0",
+    "global": "^4.3.2",
     "graphql-tag": "^2.1.0",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
