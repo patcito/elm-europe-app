@@ -1,7 +1,7 @@
  {
    name: "ElmEurope",
    icon: "./assets/logo.png",
-   version: "1.2.0",
+   version: "1.4.0",
    slug: "elm-europe",
    sdkVersion: "16.0.0",
    ios: {
