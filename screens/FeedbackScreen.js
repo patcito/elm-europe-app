@@ -77,12 +77,9 @@ export default class FeedbackScreen extends React.Component {
 
             {/* https://snack.expo.io/ByW4CFPx- */}
             <Text
-              ref={view => {
-                this._feedbackInput = view;
-              }}
+			  selectable={true}
               style={[styles.textInputRow, styles.multiLineTextInputRow, {height: 60}]}
             >Efrei, 30-32 Avenue de la République, 94800, Villejuif, France</Text>
-
           </View>
 
           <SectionLabel title="Credits" />
@@ -97,6 +94,15 @@ export default class FeedbackScreen extends React.Component {
               style={[styles.textInputRow, styles.multiLineTextInputRow, {height: 60}]}
             >Built with expo.io, thanks to the expo.io team for letting us re-use this code.</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+			onPress={() => this._handlePressEventlamaAsync()}>
+            <Text
+              minHeight={80}
+              style={[styles.textInputRow, styles.multiLineTextInputRow, {height: 120}]}
+            >This app was built using Eventlama's GraphQL API. Eventlama is an event management software that helps you get running
+			in seconds with your event from tickets selling to a professional looking website with speakers, schedule, sponsors management and more.</Text>
+      </TouchableOpacity>
+
 
           </View>
         </ScrollView>
@@ -109,7 +115,11 @@ export default class FeedbackScreen extends React.Component {
   };
   _handlePressExpoAsync = async () => {
     await WebBrowser.openBrowserAsync('https://expo.io');
-  };  _renderSubmitButton = () => {
+  };
+  _handlePressEventlamaAsync = async () => {
+    await WebBrowser.openBrowserAsync('https://eventlama.com');
+  };
+  _renderSubmitButton = () => {
     return (
       <TouchableOpacity
         onPress={() => alert('pressed!')}
