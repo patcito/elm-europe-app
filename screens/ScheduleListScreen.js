@@ -177,7 +177,7 @@ render() {
           alignItems: 'center',
         }}>
         <Image
-          source={require('../assets/logo.png')}
+          source={require('../assets/logo-header.png')}
           style={{ width: 100, height: 100, resizeMode: 'contain' }}
         />
       </View>
