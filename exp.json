@@ -1,14 +1,18 @@
  {
    name: "ElmEurope",
    icon: "./assets/logo.png",
-   version: "1.4.0",
+   version: "1.8.0",
    slug: "elm-europe",
    sdkVersion: "16.0.0",
+   loading: {
+	icon: "./assets/logo.png",
+   },
    ios: {
      bundleIdentifier: "com.eventlama.elmeurope",
    },
    android: {
      package: "com.eventlama.elmeurope",
+	 versionCode: 2,
 	 config: {
 		 googleSignIn: {
 			 certificateHash:"AIzaSyCQx-uIwUK_G7WhHbze0JdoGUX15jAtoc0",
